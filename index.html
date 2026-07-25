@@ -2,51 +2,163 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>个人主页</title>
-
-  <!-- 1. CSS 代码放在 <style> 标签里面 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>康宗海 - 个人主页</title>
+  
   <style>
-    /* 这里放之前的 CSS 代码 */
-    .social-links { ... }
-    .social-btn { ... }
-    .modal { ... }
-    /* ...其余 CSS 样式... */
+    /* 页面基础全局样式 */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* 核心卡片容器 */
+    .card {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      max-width: 350px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .card h1 {
+      margin: 0 0 10px 0;
+      font-size: 24px;
+      color: #1d1d1f;
+    }
+
+    .subtitle {
+      color: #6e6e73;
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    .desc {
+      color: #424245;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    /* 邮箱与社交按钮组 */
+    .email-btn {
+      display: block;
+      width: 100%;
+      padding: 10px 0;
+      background-color: #0071e3;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .social-btn {
+      padding: 8px 16px;
+      border: 1px solid #d2d2d7;
+      border-radius: 20px;
+      background-color: #f5f5f7;
+      color: #1d1d1f;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background-color: #e8e8ed;
+    }
+
+    /* 弹窗样式（核心修复：默认 display: none 隐藏） */
+    .modal {
+      display: none; 
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      text-align: center;
+      position: relative;
+      width: 220px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 14px;
+      font-size: 22px;
+      cursor: pointer;
+      color: #86868b;
+    }
+
+    .qrcode-img {
+      width: 160px;
+      height: 160px;
+      margin: 12px 0;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
   </style>
 </head>
 <body>
 
-  <!-- 2. HTML 代码放在 <body> 标签里面，卡片的下方 -->
+  <!-- 主卡片内容 -->
   <div class="card">
-    <h2>康宗海</h2>
-    <p>Python & Web 我在学习中</p>
-    <p>正在学习 HTML、CSS 和 Web 后端开发...</p>
-    <button class="email-btn">442479072@qq.com</button>
+    <h1>康宗海</h1>
+    <div class="subtitle">Python & Web 我在学习中</div>
+    <div class="desc">正在学习 HTML、CSS 和 Web 后端开发，逐渐打造自己的网站。</div>
+    
+    <a href="mailto:442479072@qq.com" class="email-btn">442479072@qq.com</a>
 
-    <!-- ★ 把新增的社交按钮和弹窗 HTML 贴在这里 ★ -->
     <div class="social-links">
-      <button class="social-btn qq" onclick="openModal('qq-modal')">QQ 联系</button>
-      <button class="social-btn douyin" onclick="openModal('douyin-modal')">抖音 主页</button>
-    </div>
-
-    <div id="qq-modal" class="modal" onclick="closeModal('qq-modal')">
-      <div class="modal-content" onclick="event.stopPropagation()">
-        <span class="close-btn" onclick="closeModal('qq-modal')">&times;</span>
-        <h3>扫码添加 QQ</h3>
-        <img src="qq-qrcode.png" alt="QQ二维码" class="qrcode-img">
-        <p>QQ 号：442479072</p>
-      </div>
-    </div>
-
-    <div id="douyin-modal" class="modal" onclick="closeModal('douyin-modal')">
-      <div class="modal-content" onclick="event.stopPropagation()">
-        <span class="close-btn" onclick="closeModal('douyin-modal')">&times;</span>
-        <h3>扫码关注抖音</h3>
-        <img src="douyin-qrcode.png" alt="抖音二维码" class="qrcode-img">
-      </div>
+      <button class="social-btn" onclick="openModal('qq-modal')">QQ 联系</button>
+      <button class="social-btn" onclick="openModal('douyin-modal')">抖音 主页</button>
     </div>
   </div>
 
-  <!-- 3. JS 代码放在 </body> 之前的 <script> 标签里面 -->
+  <!-- QQ 弹窗 -->
+  <div id="qq-modal" class="modal" onclick="closeModal('qq-modal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeModal('qq-modal')">&times;</span>
+      <h3 style="margin:0; font-size: 16px;">扫码添加 QQ</h3>
+      <img src="qq-qrcode.png" alt="QQ二维码" class="qrcode-img">
+      <p style="margin:0; font-size:13px; color:#6e6e73;">QQ 号：442479072</p>
+    </div>
+  </div>
+
+  <!-- 抖音 弹窗 -->
+  <div id="douyin-modal" class="modal" onclick="closeModal('douyin-modal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closeModal('douyin-modal')">&times;</span>
+      <h3 style="margin:0; font-size: 16px;">扫码关注抖音</h3>
+      <img src="douyin-qrcode.png" alt="抖音二维码" class="qrcode-img">
+    </div>
+  </div>
+
+  <!-- JavaScript 控制显隐 -->
   <script>
     function openModal(modalId) {
       document.getElementById(modalId).style.display = 'flex';
@@ -56,5 +168,6 @@
       document.getElementById(modalId).style.display = 'none';
     }
   </script>
+
 </body>
 </html>
