@@ -1,7 +1,7 @@
 import requests
 
 # 1. 目标网址（不需要加方括号 []）
-url = "https://www.blued.cn"
+url = "https://www.douying.com"
 
 # 2. 发送请求获取网页内容
 response = requests.get(url)
